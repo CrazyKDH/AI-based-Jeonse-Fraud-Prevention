@@ -20,17 +20,6 @@ genai.configure(api_key=api_key)
 # Gemini 모델 'gemini-2.5-pro' 사용
 model = genai.GenerativeModel('gemini-2.5-flash')
 
-# chat_with_gemini 함수
-# 사용자 입력(user_input)을 받아 Gemini 모델과 통신하고 응답을 반환하는 함수
-# Gemini 호출 과정에서 발생할 수 있는 오류를 try-except 구문으로 오류를 처리함
-def chat_with_gemini(user_input):
-    try:
-        response = model.generate_content(user_input) 
-        return response.text
-    except Exception as e:
-        return f"오류: API 호출 중 문제가 발생했습니다. ({e})"
-    
-
 # 일단 변수로 만들어서 출력해보자
 JEONSE_CHECKLIST = """
 [전세 계약 전 필수 확인 체크리스트] 📝 
@@ -51,6 +40,16 @@ JEONSE_CHECKLIST = """
 
 궁금한 서류 이름이나 확인 방법에 대해 질문해주시면 더 자세히 알려드릴게요!
 """
+
+# chat_with_gemini 함수
+# 사용자 입력(user_input)을 받아 Gemini 모델과 통신하고 응답을 반환하는 함수
+# Gemini 호출 과정에서 발생할 수 있는 오류를 try-except 구문으로 오류를 처리함
+def chat_with_gemini(user_input):
+    try:
+        response = model.generate_content(user_input) 
+        return response.text
+    except Exception as e:
+        return f"오류: API 호출 중 문제가 발생했습니다. ({e})"
     
 log_file_path = "chat_log.txt"
 
@@ -98,3 +97,4 @@ if __name__ == "__main__":
             # 파일에 대화 내용 저장
             f.write(f"나 : {user_question}\n")
             f.write(f"챗봇 : {gemini_response}\n\n")
+
